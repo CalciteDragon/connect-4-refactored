@@ -90,10 +90,9 @@ function findSpotForCol(x) {
   for (let i = yArr.length-1; i >= 0; i--) {
     if (yArr[i] === null) {
       return i;
-    } else if (i === 0) {
-      return null;
     }
   }
+  return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
