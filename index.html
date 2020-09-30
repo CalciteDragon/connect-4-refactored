@@ -1,0 +1,26 @@
+<!doctype html>
+<head>
+  <title>Connect 4</title>
+  <link href="connect4.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cousine&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="game">
+  <h1>CONNECT 4</h1>
+  <table id="board"></table>
+  <button id="restart-button">Restart Game</button>
+  <div id="turn-notifier"><span id='turn'></span> turn!</div>
+  <div id="scoreboard">
+    <div>Red Wins: <span id='p1Wins'></span>
+    </div>
+    <div>Blue Wins: <span id="p2Wins"></span>
+    </div>
+    <button id="reset-button">Reset Scoreboard</button>
+  </div>
+</div>
+
+<script src="connect4.js"></script>
+
+</body>
+</html>
