@@ -230,6 +230,7 @@ function onWin() {
 }
 
 
+// Create board
 makeBoard();
 makeHtmlBoard();
 initializeScoreboard();
