@@ -1,0 +1,5 @@
+# Anti pattern 1 - Tight coupling between game logic and UI logic for placing a piece
+In the original code, the function that handled the user clicking a column directly called a function which updated HTML elements, tightly coupling the game logic to the UI. This made the code more difficult read, maintain, and test.
+
+# Refactored solution - Command behavior pattern
+To decouple the game logic from the UI, a command pattern was used that encapsulated the act of placing a piece onto the board. The command has two methods: execute() to place the piece and undo() to remove it. This separation of concerns improved the code's readability and maintainability, but also made it easy to implement an undo functionality by storing each command into a history stack, and popping and calling undo() as needed.

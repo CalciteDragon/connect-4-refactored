@@ -20,6 +20,8 @@ const board = []; // array of rows, each row is array of cells  (board[y][x])
 let p1Wins = localStorage.getItem(`p1Wins`) || 0;
 let p2Wins = localStorage.getItem(`p2Wins`) || 0;
 
+let placeHistory = []; // history of PlaceCommand objects for undo functionality
+
 // 
 function initializeScoreboard() {
   updateScoreBoard(1);
@@ -95,19 +97,6 @@ function findSpotForCol(x) {
   return null;
 }
 
-/** placeInTable: update DOM to place piece into HTML table of board */
-
-// Create a new div element that will be added to the HTML board. Add classes
-// .piece and either .player1 or .player2 depending on whose turn it is.
-// Last, check if cell is empty. If empty, append the new piece, otherwise nothing happens.
-function placeInTable(y, x) {
-  const newPiece = document.createElement('div');
-  newPiece.className = 'piece';
-  currPlayer === 1 ? newPiece.classList.add('player1') : newPiece.classList.add('player2');
-  const piecePlace = document.getElementById(`${y}-${x}`);
-  if (piecePlace.childElementCount === 0) piecePlace.append(newPiece);
-}
-
 /** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
@@ -121,11 +110,10 @@ function handleClick(evt) {
     return;
   }
 
-  // place piece in board and add to HTML table
-  // Using the found y array and x value of array, change x value to number of current player
-  board[y][x] = currPlayer;
-  placeInTable(y, x);
-
+  let placeCmd = new PlaceCommand(x, y, currPlayer, board);
+  placeCmd.execute();
+  placeHistory.push(placeCmd);
+  updateUndoButton();
   
   // check for win
   if (checkForWin()) {
@@ -203,6 +191,26 @@ resetter.addEventListener('click', () => {
   initializeScoreboard();
 })
 
+//undo button pops the last place command and undoes it
+const undoButton = document.getElementById('undo-button');
+undoButton.addEventListener('click', handleUndo);
+
+function handleUndo() {
+  if (placeHistory.length === 0 || win) return;
+  
+  const lastCommand = placeHistory.pop();
+  lastCommand.undo();
+  
+  currPlayer = currPlayer === 1 ? 2 : 1;
+  
+  turnChecker();
+  updateUndoButton();
+}
+
+function updateUndoButton() {
+  undoButton.disabled = placeHistory.length === 0 && !win;
+}
+
 // Checks what color's turn it currently is and updates HTML
 function turnChecker() {
   if (currPlayer === 1) {
@@ -235,3 +243,4 @@ makeBoard();
 makeHtmlBoard();
 initializeScoreboard();
 turnChecker();
+updateUndoButton();

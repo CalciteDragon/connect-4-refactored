@@ -52,6 +52,23 @@
   margin: 0 auto 0;
 }
 
+#undo-button {
+  position: absolute;
+  top: 110px;
+  left: 250px;
+  width: 40px;
+  height: 40px;
+  font-size: 28px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
 #restart-button {
   margin: 1% 0 2%;
 }
